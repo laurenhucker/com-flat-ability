@@ -13,7 +13,8 @@ var credentials = {
 var spotifyApi = new SpotifyWebApi(credentials);
 
 router.get('/', function (req, res) {
-  res.send('Hello<br><a href="/auth">Log in with Spotify</a>');
+  res.render('pages/index',{link:'/auth'})
+  //res.send('Hello<br><a href="/auth">Log in with Spotify</a>');
 });
 
 router.get('/auth', function (req, res) {

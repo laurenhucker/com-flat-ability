@@ -1,6 +1,14 @@
 body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+
+  font-family: Arial;
+  font-size: 100pt;
+  text-align: center;
+  max-width: 1000px;
+  margin: 0 auto;
+  background: linear-gradient(blue, red);
+  color: white;
 }
 
 a {
