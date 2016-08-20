@@ -1,6 +1,8 @@
 var jsonfile = require('jsonfile');
 var exports = module.exports = {};
 
+var file = "./data/db.json";
+
 var users = [
     {
         name: "Lena",
@@ -39,8 +41,6 @@ var flats = [{
     spotify: {}
 }];
 
-
-
 function getUsers(){
     return users;
 }
@@ -63,13 +63,24 @@ function addFlat(flat){
     users.push(flat);
 }
 
+var obj = {users: getUsers(), flats: getFlats()};
+
+function writeToFile(){
+    jsonfile.writeFileSync(file, obj, { flag: 'w'});
+}
+
+function readFile(){
+    console.dir(jsonfile.readFileSync(file));
+}
+
 exports.getUsers = getUsers;
 exports.getFlats = getFlats;
 exports.getUser = getUser;
 exports.getFlat = getFlat;
 exports.addFlat = addFlat;
 exports.addUser = addUser;
-
+exports.writeToFile = writeToFile;
+exports.readFile = readFile;
 
 
 
