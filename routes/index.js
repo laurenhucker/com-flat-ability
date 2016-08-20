@@ -34,7 +34,19 @@ router.get('/test', function (req, res) {
 });
 
 router.get('/success', function (req, res) {
+    console.log('hello');
     res.send("Success baby");
+    /*getIdsFromPlaylist('1281597756','0WecQF718OOPVmSsDizFou').then(function(result){
+        var firstIDs = result;
+        console.log(firstIDs);
+        getIdsFromPlaylist('1281597756','1ok2P5ointA9iZqPGQGSLQ').then(function(result2){
+            var secondIDs = result2;
+            console.log(secondIDs);
+            getGeniusFromIDs(firstIDs, secondIDs).then(function(result3){
+                console.log(result3);
+            });
+        });
+    });*/
     /*getPlaylist('1281597756','1ok2P5ointA9iZqPGQGSLQ').then(function(result){
         console.log(result);
     });*/
@@ -44,7 +56,7 @@ router.get('/success', function (req, res) {
     /*getAudioFeaturesForTrack('4Ju8pNta5r29QBLCSMvwdn').then(function(result){
         console.log(result);
     });*/
-    getIdsFromPlaylist('1281597756','1ok2P5ointA9iZqPGQGSLQ').then(function(result){
+    /*getIdsFromPlaylist('1281597756','1ok2P5ointA9iZqPGQGSLQ').then(function(result){
         //console.log(result);
         getAudioFeaturesForTracks(result).then(function(result2){
             console.log(result2);
@@ -52,8 +64,28 @@ router.get('/success', function (req, res) {
                 console.log(result2.body.audio_features[i]);
             }
         });
-    });
+    });*/
 });
+
+function getAudioFeaturesFromPlaylist(userID, playlistID){
+    
+
+}
+
+function getGeniusFromIDs(first_IDs, second_IDs){
+    return new Promise(function (fulfill, reject){
+        var commonIDs = [];
+        for (var i = 0; i < first_IDs.length; i++){
+            for(var x = 0; x < second_IDs.length; x++){
+                if(first_IDs[i] === second_IDs[x]){
+                    commonIDs.push(first_IDs[i]);
+                    break;
+                }
+            }
+        }
+        fulfill(commonIDs);
+    });
+}
 
 function getAudioFeaturesForTrack(track_id){
     return new Promise(function (fulfill, reject){
@@ -146,4 +178,9 @@ function post(key, res) {
   );
 }
 
+
+/*Working playlists + IDs
+ *'1281597756','1ok2P5ointA9iZqPGQGSLQ'
+ * '1281597756','0WecQF718OOPVmSsDizFou'
+ */
 module.exports = router;
