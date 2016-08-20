@@ -36,6 +36,9 @@ router.get('/test', function (req, res) {
 router.get('/success', function (req, res) {
     console.log('hello');
     res.send("Success baby");
+    getAudioFeaturesFromPlaylist('1281597756','1ok2P5ointA9iZqPGQGSLQ').then(function(result){
+        console.log(result);
+    })
     /*getIdsFromPlaylist('1281597756','0WecQF718OOPVmSsDizFou').then(function(result){
         var firstIDs = result;
         console.log(firstIDs);
@@ -68,7 +71,13 @@ router.get('/success', function (req, res) {
 });
 
 function getAudioFeaturesFromPlaylist(userID, playlistID){
-    
+    return new Promise(function(fulfill, reject){
+        getIdsFromPlaylist(userID, playlistID).then(function(result){
+            getAudioFeaturesForTracks(result).then(function(result2){
+                fulfill(result2.body);
+            });
+        });
+    });
 
 }
 
