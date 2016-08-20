@@ -16,6 +16,10 @@ router.get('/', function (req, res) {
   res.send('Hello<br><a href="/auth">Log in with Spotify</a>');
 });
 
+router.get('/flat', function (req, res) {
+    res.render('./views/flat.ejs', {photos: ["PHOTO 1","PHOTO 2", "PHOTO 3" ]});
+});
+
 router.get('/auth', function (req, res) {
   var client_id = credentials.client_id;
   var response_type = 'code';
