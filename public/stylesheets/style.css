@@ -1,8 +1,38 @@
 body {
-  padding: 50px;
+  padding-top: 20px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-color: #181818;
+  color: black;
 }
 
-a {
-  color: #00B7FF;
+.outer-container {
+  background-color: aqua;
+}
+
+.candidate-wrapper {
+  margin:10px 10px;
+  background-color: blueviolet;
+  width:30%;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.candidate-wrapper.candidate-photo {
+
+}
+
+.candidate-photo-image {
+  width:100%;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.candidate-info {
+  background-color: black;
+  color: darkgreen;
+  text-align: center;
+  font-size: 25px;
+  width:100%;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
 }
