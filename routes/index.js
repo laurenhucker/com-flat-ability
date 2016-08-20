@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var db = require('../db');
 
 var request = require('request');
 //var Base64 = require('base64-js');
@@ -35,7 +36,8 @@ router.get('/callback', function (req, res) {
 });
 
 router.get('/test', function (req, res) {
-    res.render("pages/test", {candidates: ['hi', 'poo'],candidate_name: "Cat", candidate_match_percent: 69});
+    var users = db.getUsers();
+    res.render("pages/test", {candidates: users,candidate_name: "Cat", candidate_match_percent: 69});
 });
 
 router.get('/success', function (req, res) {
