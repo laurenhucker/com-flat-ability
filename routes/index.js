@@ -31,7 +31,7 @@ router.get('/callback', function (req, res) {
 });
 
 router.get('/test', function (req, res) {
-    res.render("public/test.html");
+    res.render("pages/test", {test: 2});
 });
 
 router.get('/success', function (req, res) {
