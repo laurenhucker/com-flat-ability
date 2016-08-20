@@ -29,10 +29,25 @@ body {
 
 .candidate-info {
   background-color: black;
+  display: inline-block;
+  vertical-align: top;
   color: darkgreen;
   text-align: center;
   font-size: 25px;
   width:100%;
+  height: 200%;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
+}
+
+.candidate-name {
+  background-color: darkred;
+  width:48%;
+  horiz-align: left;
+}
+
+.candidate-match {
+  background-color: darkgoldenrod;
+  width:48%;
+  horiz-align: right;
 }

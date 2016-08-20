@@ -31,7 +31,7 @@ router.get('/callback', function (req, res) {
 });
 
 router.get('/test', function (req, res) {
-    res.render("pages/test", {test: 2});
+    res.render("pages/test", {candidates: ['hi', 'poo'],candidate_name: "Cat", candidate_match_percent: 69});
 });
 
 router.get('/success', function (req, res) {
