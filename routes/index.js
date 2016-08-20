@@ -1,7 +1,9 @@
 var express = require('express');
 var router = express.Router();
 
-var http = require("http");
+var request = require('request');
+//var Base64 = require('base64-js');
+
 var SpotifyWebApi = require('spotify-web-api-node');
 var credentials = {
   client_id : '5b3fe858f8074daba7c88c148532de17',
@@ -23,31 +25,34 @@ router.get('/auth', function (req, res) {
 
 router.get('/callback', function (req, res) {
   var key = req.query.code;
-  res.send(key);
+  //res.send(key);
+  post(key);
 });
 
-var options = {
-  hostname: 'https://accounts.spotify.com',
-  port: 80,
-  path: '/api/token',
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-  }
-};
-var req = http.request(options, function(res) {
-  console.log('Status: ' + res.statusCode);
-  console.log('Headers: ' + JSON.stringify(res.headers));
-  res.setEncoding('utf8');
-  res.on('data', function (body) {
-    console.log('Body: ' + body);
-  });
-});
-req.on('error', function(e) {
-  console.log('problem with request: ' + e.message);
-});
-// write data to request body
-req.write('{"string": "Hello, World"}');
-req.end();
+function post(key) {
+  //var encoded_auth = Base64.toByteArray('5b3fe858f8074daba7c88c148532de17:18fe72f57cc34431bdd84e513539cb37');
+  var encoded_auth = (new Buffer("5b3fe858f8074daba7c88c148532de17:18fe72f57cc34431bdd84e513539cb37").toString("base64"));
+  request.post(
+      'https://accounts.spotify.com/api/token',
+      {
+        form: {
+          grant_type: 'authorization_code',
+          code: key,
+          redirect_uri: 'http://localhost:3000/callback'
+        },
+        headers: {
+          Authorization: 'Basic ' + encoded_auth
+        },
+      },
+      function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+          console.log(body);
+        } else {
+          console.log(body);
+          console.log(response.statusCode);
+        }
+      }
+  );
+}
 
 module.exports = router;
