@@ -25,12 +25,100 @@ router.get('/auth', function (req, res) {
 });
 
 router.get('/callback', function (req, res) {
-  var key = req.query.code;
-  //res.send(key);
-  post(key);
+    var key = req.query.code;
+    //res.send(key);
+    post(key, res);
 });
 
-function post(key) {
+router.get('/test', function (req, res) {
+    res.render("public/test.html");
+});
+
+router.get('/success', function (req, res) {
+    res.send("Success baby");
+    /*getPlaylist('1281597756','1ok2P5ointA9iZqPGQGSLQ').then(function(result){
+        console.log(result);
+    });*/
+    /*getTrack('4Ju8pNta5r29QBLCSMvwdn').then(function(result){
+        console.log(result);
+    });*/
+    /*getAudioFeaturesForTrack('4Ju8pNta5r29QBLCSMvwdn').then(function(result){
+        console.log(result);
+    });*/
+    getIdsFromPlaylist('1281597756','1ok2P5ointA9iZqPGQGSLQ').then(function(result){
+        //console.log(result);
+        getAudioFeaturesForTracks(result).then(function(result2){
+            console.log(result2);
+            for(var i = 0; i < result2.body.audio_features.length; i++){
+                console.log(result2.body.audio_features[i]);
+            }
+        });
+    });
+});
+
+function getAudioFeaturesForTrack(track_id){
+    return new Promise(function (fulfill, reject){
+        spotifyApi.getAudioFeaturesForTrack(track_id)
+            .then(function(data) {
+                fulfill(data);
+            }, function(err) {
+                reject(err);
+            });
+    });
+}
+
+function getAudioFeaturesForTracks(track_ids){
+    return new Promise(function (fulfill, reject){
+        spotifyApi.getAudioFeaturesForTracks(track_ids)
+            .then(function(data) {
+                fulfill(data)
+            }, function(err) {
+                reject(err);
+            });
+    });
+}
+
+function getTrack(track_id){
+    return new Promise(function (fulfill, reject){
+        spotifyApi.getTrack(track_id)
+            .then(function(data) {
+                fulfill(data)
+            }, function(err) {
+                reject(err);
+            });
+    });
+}
+
+function getPlaylist(user_id, playlist_id){
+    return new Promise(function(fulfill, reject){
+        spotifyApi.getPlaylist(user_id, playlist_id)
+            .then(function(data) {
+                fulfill(data.body.tracks.items);
+            }, function(err) {
+                reject(err);
+            });
+    });
+}
+
+function getIdsFromPlaylist(user_id, playlist_id){
+    return new Promise(function(fulfill, reject){
+        spotifyApi.getPlaylist(user_id, playlist_id)
+            .then(function(data) {
+                var track_ids = [];
+                for(var i = 0; i < 100; i++){
+                    var track_id = data.body.tracks.items[i].track.id;
+                    if(track_id != null)
+                        track_ids.push(track_id);
+                }
+                fulfill(track_ids);
+            }, function(err) {
+                console.log(err);
+                reject(err);
+            });
+    });
+}
+
+function post(key, res) {
   //var encoded_auth = Base64.toByteArray('5b3fe858f8074daba7c88c148532de17:18fe72f57cc34431bdd84e513539cb37');
   var encoded_auth = (new Buffer("5b3fe858f8074daba7c88c148532de17:18fe72f57cc34431bdd84e513539cb37").toString("base64"));
   request.post(
@@ -47,9 +135,12 @@ function post(key) {
       },
       function (error, response, body) {
         if (!error && response.statusCode == 200) {
-          console.log(body);
+            var token = JSON.parse(body).access_token;
+            //console.log(token);
+            spotifyApi.setAccessToken(token);
+            res.redirect("http://localhost:3000/success");
         } else {
-          console.log(body);
+          //console.log(body);
           console.log(response.statusCode);
         }
       }
