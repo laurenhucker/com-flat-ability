@@ -34,17 +34,17 @@ router.get('/callback', function (req, res) {
     post(key, res);
 });
 
-router.get('/test', function (req, res) {
+router.get('/personList', function (req, res) {
     var users = db.getUsers();
-    res.render("pages/test", {candidates: users,candidate_name: "Cat", candidate_match_percent: 69});
+    res.render("pages/personList", {candidates: users,candidate_name: "Cat", candidate_match_percent: 69});
 });
 
 router.get('/profile', function (req, res) {
-    var u = db.getUsers()[0];
-
+    var u = db.getUsers()[req.query.id];
     getGeniusPlaylistJSON('1281597756','1ok2P5ointA9iZqPGQGSLQ','1281597756','0WecQF718OOPVmSsDizFou').then(function(result){
         console.log(result);
         var info = {
+            userID: req.query.id,
             userName: u.name,
             userAge: u.age,
             userOccupation: u.occupation,
@@ -66,12 +66,16 @@ router.get('/success', function (req, res) {
         console.log(result);
     })*/
 
-    getGeniusPlaylistJSON('1281597756','1ok2P5ointA9iZqPGQGSLQ','1281597756','0WecQF718OOPVmSsDizFou').then(function(result){
+    /*getGeniusPlaylistJSON('1281597756','1ok2P5ointA9iZqPGQGSLQ','1281597756','0WecQF718OOPVmSsDizFou').then(function(result){
         console.log(result);
-    });
+    });*/
+
     res.send("Success baby");
 
-    /*getAudioFeaturesFromPlaylist('1281597756','1ok2P5ointA9iZqPGQGSLQ').then(function(result){
+    /*getUsefulAudioFeaturesFromPlaylist('1281597756','1ok2P5ointA9iZqPGQGSLQ').then(function(result){
+        console.log(result);
+    })
+    getAverageAudioFeaturesFromPlaylist('1281597756','1ok2P5ointA9iZqPGQGSLQ').then(function(result){
         console.log(result);
     })*/
     /*getIdsFromPlaylist('1281597756','0WecQF718OOPVmSsDizFou').then(function(result){
@@ -104,6 +108,41 @@ router.get('/success', function (req, res) {
         });
     });*/
 });
+//returns array of useful audio features
+function getUsefulAudioFeaturesFromPlaylist(userID, playlistID){
+    return new Promise(function(fulfill,reject){
+        getAudioFeaturesFromPlaylist(userID, playlistID).then(function(result){
+            console.log(result);
+            console.log('hello');
+            var newFeatures = [];
+            var audioFeatures= result.audio_features;
+            for(var i = 0; i < audioFeatures.length; i++){
+                console.log('daswiDFBNUOABFUJ');
+                var danceability = audioFeatures[i].danceability;
+                var energy = audioFeatures[i].energy;
+                var loudness = audioFeatures[i].loudness;
+                var speechiness = audioFeatures[i].speechiness;
+                var acousticness = audioFeatures[i].acousticness;
+                var instrumentalness = audioFeatures[i].instrumentalness;
+                var liveness = audioFeatures[i].liveness;
+                var tempo = audioFeatures[i].tempo;
+                newFeatures.push({danceability:danceability,
+                    energy:energy,
+                    loudness:loudness,
+                    speechiness:speechiness,
+                    instrumentalness:instrumentalness,
+                    liveness:liveness,
+                    tempo:tempo,
+                    acousticness:acousticness
+                });
+            }
+            console.log(newFeatures);
+            fulfill(newFeatures);
+        }).catch(function(error){
+            console.log(error);
+        });
+    });
+}
 
 function getGeniusPlaylistJSON(userID1, playlistID1, userID2, playlistID2){
     return new Promise(function(fulfill,reject){
@@ -163,6 +202,55 @@ function getCommonIDs(userID1, playlistID1, userID2, playlistID2){
     })
 }
 //JSON of audio feaures
+
+function getAverageAudioFeaturesFromPlaylist(userID1, playlistID1){
+    console.log("IN HERE  aWJDHBAJWD");
+    return new Promise(function(fulfill, reject){
+        getAudioFeaturesFromPlaylist(userID1, playlistID1).then(function(result){
+            var features1 = result;
+
+            var danceability1 = 0;
+            var energy1 = 0;
+            var loudness1 = 0;
+            var speechiness1 = 0;
+            var acousticness1 = 0;
+            var instrumentalness1 = 0;
+            var liveness1 = 0;
+            var tempo1 = 0;
+
+            for(var i = 0; i < features1.audio_features.length; i++){
+                danceability1 += features1.audio_features[i].danceability;
+                energy1 += features1.audio_features[i].energy;
+                loudness1 += features1.audio_features[i].loudness;
+                speechiness1 += features1.audio_features[i].speechiness;
+                acousticness1 += features1.audio_features[i].acousticness;
+                instrumentalness1 += features1.audio_features[i].instrumentalness;
+                liveness1 += features1.audio_features[i].liveness;
+                tempo1 += features1.audio_features[i].tempo;
+            }
+            var playlist_length = features1.audio_features.length;
+            var average_features = {
+                danceability: danceability1/playlist_length,
+                energy: energy1/playlist_length,
+                loudness: loudness1/playlist_length,
+                speechiness: speechiness1/playlist_length,
+                acousticness: acousticness1/playlist_length,
+                instrumentalness: instrumentalness1/playlist_length,
+                liveness: liveness1/playlist_length,
+                tempo: tempo1/playlist_length
+            };
+            /*console.log("AVERAGE FEATURES FOR PLAYLIST 1:");
+            console.log(average_features);*/
+            fulfill(average_features);
+        }).catch(function(error){
+            console.log(error);
+        })
+
+
+    });
+
+}
+
 function getAudioFeaturesFromPlaylist(userID, playlistID){
     return new Promise(function(fulfill, reject){
         getIdsFromPlaylist(userID, playlistID).then(function(result){
@@ -271,7 +359,7 @@ function post(key, res) {
             var token = JSON.parse(body).access_token;
             //console.log(token);
             spotifyApi.setAccessToken(token);
-            res.redirect("http://localhost:3000/success");
+            res.redirect("http://localhost:3000/personList");
         } else {
           //console.log(body);
           console.log(response.statusCode);
