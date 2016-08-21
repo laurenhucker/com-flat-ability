@@ -60,8 +60,7 @@ router.get('/profile', function (req, res) {
             rent: u.priceRange,
             occupationDetails: u.studying,
             extraDetails: u.desc,
-
-            displayPhoto: u.photo
+            displayPhoto: u.photo,
             songs: result1,
             playlist1_AVGDATA: result2,
             playlist2_AVGDATA: result3
