@@ -4,6 +4,8 @@
     <% include ../partials/head.ejs %>
     <link rel="stylesheet" type="text/css" href="stylesheets/test_style.css">
     </link>
+    
+        <link href="../public/stylesheets/bootstrap.min.css" rel="stylesheet">
 
     <script src="Chart.js"></script>
 <script>
@@ -17,6 +19,8 @@
 
 </header>
 
+
+
 <body>
     <div class="outer-container">
         <%for(var i = 0; i < candidates.length; i++){%>
@@ -24,6 +28,7 @@
                 <div class="candidate-photo">
                     <img src="cat.jpg" class="candidate-photo-image">
                 </div>
+                
                 <div class="candidate-info">
                     <div class="candidate-name">
                         <%=candidates[i].name%>

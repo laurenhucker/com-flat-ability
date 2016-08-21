@@ -17,8 +17,8 @@ var credentials = {
 var spotifyApi = new SpotifyWebApi(credentials);
 
 router.get('/', function (req, res) {
-  //res.render('pages/index',{link:'/auth'})
-  res.send('Hello<br><a href="/auth">Log in with Spotify</a>');
+  res.render('pages/index',{link:'/auth'})
+  //res.send('Hello<br><a href="/auth">Log in with Spotify</a>');
 });
 
 router.get('/auth', function (req, res) {
@@ -62,15 +62,11 @@ router.get('/profile', function (req, res) {
 
 router.get('/success', function (req, res) {
     console.log('hello');
-    /*getCommonIDs('1281597756','1ok2P5ointA9iZqPGQGSLQ','1281597756','0WecQF718OOPVmSsDizFou').then(function(result){
-        console.log(result);
-    })*/
 
-    /*getGeniusPlaylistJSON('1281597756','1ok2P5ointA9iZqPGQGSLQ','1281597756','0WecQF718OOPVmSsDizFou').then(function(result){
-        console.log(result);
-    });*/
+    /*getAverageAudioFeaturesFromPlaylist('1281597756','1ok2P5ointA9iZqPGQGSLQ').then(function(result){
+        getAverageAudioFeaturesFromPlaylist('1246385134', '4Br383P0RJHkziU0rdLQGt').then(function(result2){
+            console.log('yowza');
 
-    res.send("Success baby");
 
     /*getUsefulAudioFeaturesFromPlaylist('1281597756','1ok2P5ointA9iZqPGQGSLQ').then(function(result){
         console.log(result);
@@ -85,29 +81,62 @@ router.get('/success', function (req, res) {
             var secondIDs = result2;
             console.log(secondIDs);
             getGeniusFromIDs(firstIDs, secondIDs).then(function(result3){
+
+            getPercentageMatchFromAverages(result,result2).then(function(result3){
+
                 console.log(result3);
             });
         });
-    });*/
-    /*getPlaylist('1281597756','1ok2P5ointA9iZqPGQGSLQ').then(function(result){
+    }).catch(function(error){
+        console.log(error);
+    });
+    res.send('asdnasdk');*/
+    /*getPlaylist('1246385134', '4Br383P0RJHkziU0rdLQGt').then(function(result){
         console.log(result);
-    });*/
-    /*getTrack('4Ju8pNta5r29QBLCSMvwdn').then(function(result){
-        console.log(result);
-    });*/
-    /*getAudioFeaturesForTrack('4Ju8pNta5r29QBLCSMvwdn').then(function(result){
-        console.log(result);
-    });*/
-    /*getIdsFromPlaylist('1281597756','1ok2P5ointA9iZqPGQGSLQ').then(function(result){
-        //console.log(result);
-        getAudioFeaturesForTracks(result).then(function(result2){
-            console.log(result2);
-            for(var i = 0; i < result2.body.audio_features.length; i++){
-                console.log(result2.body.audio_features[i]);
-            }
-        });
+        res.send('hello');
     });*/
 });
+
+function getPercentageMatchFromAverages(averages1,averages2){
+    console.log('in here');
+    return new Promise(function(fulfill,reject){
+        var difference = 0;
+        difference += Math.abs(averages1.danceability - averages2.danceability);
+        difference += Math.abs(averages1.energy - averages2.energy);
+        //difference += Math.abs(Math.abs(averages1.loudness) - Math.abs(averages2.loudness));
+        difference += Math.abs(averages1.speechiness - averages2.speechiness);
+        difference += Math.abs(averages1.acousticness - averages2.acousticness);
+        difference += Math.abs(averages1.instrumentalness - averages2.instrumentalness);
+        difference += Math.abs(averages1.liveness - averages2.liveness);
+        //difference += Math.abs(averages1.tempo - averages2.tempo);
+        fulfill(difference*100 + '%');
+    }).catch(function(error){
+        console.log(error);
+    });
+}
+
+function getPercentageMatchFromPlaylists(userID1, playlistID1, userID2, playlistID2){
+    return new Promise(function(fulfill,reject){
+        getAverageAudioFeaturesFromPlaylist(userID1, playlistID1).then(function(result){
+            var averages1 = result;
+            getAverageAudioFeaturesFromPlaylist(userID2, playlistID2).then(function(result2){
+                var averages2 = result2;
+                var difference = 0;
+                difference += Math.abs(averages1.danceability - averages2.danceability);
+                difference += Math.abs(averages1.energy - averages2.energy);
+                //difference += Math.abs(Math.abs(averages1.loudness) - Math.abs(averages2.loudness));
+                difference += Math.abs(averages1.speechiness - averages2.speechiness);
+                difference += Math.abs(averages1.acousticness - averages2.acousticness);
+                difference += Math.abs(averages1.instrumentalness - averages2.instrumentalness);
+                difference += Math.abs(averages1.liveness - averages2.liveness);
+                //difference += Math.abs(averages1.tempo - averages2.tempo);
+                fulfill(difference*100 + '%');
+            }).catch(function(error){
+                console.log(error);
+            });
+        });
+    });
+}
 //returns array of useful audio features
 function getUsefulAudioFeaturesFromPlaylist(userID, playlistID){
     return new Promise(function(fulfill,reject){
@@ -158,12 +187,9 @@ function getGeniusPlaylistJSON(userID1, playlistID1, userID2, playlistID2){
 }
 
 function getRelevantTrackInformation(tracks){
-    console.log('yowzasadsasd');
     return new Promise(function(fulfill,reject){
-        console.log('yowzasadsasd');
         var tracksJSON = [];
         for(var i = 0; i < tracks.length; i++){
-            console.log('yowdzfafsdza');
             var name = tracks[i].name;
             var popularity = tracks[i].popularity;
             var ID = tracks[i].id;
