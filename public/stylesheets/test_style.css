@@ -38,6 +38,8 @@ body {
   height: 200%;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
+  background-color: #b1b1b1;
+  color: black;
 }
 
 .candidate-name {
