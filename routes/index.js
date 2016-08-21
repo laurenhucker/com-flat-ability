@@ -62,14 +62,15 @@ router.get('/success', function (req, res) {
         console.log(result);
     })*/
 
-    getGeniusPlaylistJSON('1281597756','1ok2P5ointA9iZqPGQGSLQ','1281597756','0WecQF718OOPVmSsDizFou').then(function(result){
+    /*getGeniusPlaylistJSON('1281597756','1ok2P5ointA9iZqPGQGSLQ','1281597756','0WecQF718OOPVmSsDizFou').then(function(result){
         console.log(result);
-    });
+    });*/
+
     res.send("Success baby");
 
-    /*getAudioFeaturesFromPlaylist('1281597756','1ok2P5ointA9iZqPGQGSLQ').then(function(result){
+    getUsefulAudioFeaturesFromPlaylist('1281597756','1ok2P5ointA9iZqPGQGSLQ').then(function(result){
         console.log(result);
-    })*/
+    })
     /*getIdsFromPlaylist('1281597756','0WecQF718OOPVmSsDizFou').then(function(result){
         var firstIDs = result;
         console.log(firstIDs);
@@ -100,6 +101,41 @@ router.get('/success', function (req, res) {
         });
     });*/
 });
+//returns array of useful audio features
+function getUsefulAudioFeaturesFromPlaylist(userID, playlistID){
+    return new Promise(function(fulfill,reject){
+        getAudioFeaturesFromPlaylist(userID, playlistID).then(function(result){
+            console.log(result);
+            console.log('hello');
+            var newFeatures = [];
+            var audioFeatures= result.audio_features;
+            for(var i = 0; i < audioFeatures.length; i++){
+                console.log('daswiDFBNUOABFUJ');
+                var danceability = audioFeatures[i].danceability;
+                var energy = audioFeatures[i].energy;
+                var loudness = audioFeatures[i].loudness;
+                var speechiness = audioFeatures[i].speechiness;
+                var acousticness = audioFeatures[i].acousticness;
+                var instrumentalness = audioFeatures[i].instrumentalness;
+                var liveness = audioFeatures[i].liveness;
+                var tempo = audioFeatures[i].tempo;
+                newFeatures.push({danceability:danceability,
+                    energy:energy,
+                    loudness:loudness,
+                    speechiness:speechiness,
+                    instrumentalness:instrumentalness,
+                    liveness:liveness,
+                    tempo:tempo,
+                    acousticness:acousticness
+                });
+            }
+            console.log(newFeatures);
+            fulfill(newFeatures);
+        }).catch(function(error){
+            console.log(error);
+        });
+    });
+}
 
 function getGeniusPlaylistJSON(userID1, playlistID1, userID2, playlistID2){
     return new Promise(function(fulfill,reject){
