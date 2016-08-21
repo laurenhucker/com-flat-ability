@@ -13,18 +13,15 @@
 <body>
 <div class="wrapper">
     <div class="top-banner">
-        <div class="logo"> LOGO HERE</div>
-        <div class="settings"> SETTING</div>
-        <div class="login">LOGIN</div>
+        <% include ../partials/header.ejs %>
     </div>
     <div class="flat-title">
         <div class="user-photo"><img src="<%= displayPhoto %>" class="user-image"> </div>
         <div class="user-desc">
-            <div class="preferred-suburb"> <%= address %></div>
-            <div class="prefered-rent-range"> <%= rent %> p/week</div>
-            <div class="occupation-details"> <%= occupationDetails %></div>
-            <div class="extra-details"> <%= extraDetails %> </div>
-            <div class="contact"> CONTACT </div>
+            <div class="preferred-suburb"> <p>Prefered Suburb: <%= address %></div>
+            <div class="prefered-rent-range"> <p>Price Range <%= rent %> p/week</div>
+            <div class="occupation-details"> <p>Studying: <%= occupationDetails %></div>
+            <div class="extra-details"> <p>Details <%= extraDetails %> </div>
         </div>
         <div class="flat-info">
             <div class="profile-name"> <%= userName %> </div>
