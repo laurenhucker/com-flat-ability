@@ -5,27 +5,74 @@ var file = "./data/db.json";
 
 var users = [
     {
-        name: "Lena",
+        name: "Nina",
         age: 20,
         occupation: "Student",
         studying: "Commerce",
-        photo: "a file",
+        photo: "images/nina.jpg",
         desc: "Vegan, Dog owner",
         suburb: "Aro valley",
         priceRange: "150-200",
+        spotifyAccount: {id: "1281597756", playlistId: "1ok2P5ointA9iZqPGQGSLQ"},
         spotify: songs=[{title: "s", artist: "d", album: "f"}, {title: "k", artist: "9", album: "6"}]
     },
     {
-        name: "Bob",
+        name: "Dylan",
         age: 19,
-        occupation: "student",
-        studying: "Bio Med",
+        occupation: "Student",
+        studying: "Computer Science",
+        photo: "/images/dylan.jpg",
+        desc: "Has a cat",
+        suburb: "Te Aro",
+        priceRange: "150-200",
+        spotifyAccount: {id: "1246385134", playlistId: "4Br383P0RJHkziU0rdLQGt"},
+        spotify: {}
+    },
+    {
+        name: "Paul",
+        age: 20,
+        occupation: "Young Professional",
+        studying: "/images/paul.jpg",
         photo: "a file",
+        desc: "Vegan",
+        suburb: "Mt Vic",
+        priceRange: "150-200",
+        spotify: {}
+    },
+    {
+        name: "Fran",
+        age: 18,
+        occupation: "student",
+        studying: "Psychology",
+        photo: "/images/fran.jpg",
         desc: "Allergic to cats",
         suburb: "Mt Vic",
         priceRange: "150-200",
         spotify: {}
-    }];
+    },
+    {
+        name: "Lauren",
+        age: 23,
+        occupation: "Young Professional",
+        studying: "Checkout chick",
+        photo: "/images/lauren.jpg",
+        desc: "Has a child",
+        suburb: "Mt Vic",
+        priceRange: "150-200",
+        spotify: {}
+    },
+    {
+        name: "Alex",
+        age: 18,
+        occupation: "Student",
+        studying: "Psychology",
+        photo: "/images/alex.jpg",
+        desc: "Allergic to cats",
+        suburb: "Mt Vic",
+        priceRange: "150-200",
+        spotify: {}
+    }
+];
 
 var flats = [{
     address: "1 two lane",
