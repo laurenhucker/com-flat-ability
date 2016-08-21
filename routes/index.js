@@ -52,7 +52,8 @@ router.get('/profile', function (req, res) {
             rent: u.priceRange,
             occupationDetails: u.studying,
             extraDetails: u.desc,
-            songs: result
+            songs: result,
+            displayPhoto: u.photo
         };
         res.render("pages/profile", info);
     });
