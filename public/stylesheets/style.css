@@ -48,6 +48,14 @@ a {
 
 }
 
+.chart1{
+  float:left;
+}
+
+.chart2{
+  float:right;
+}
+
 .wrapper {
   width:100%;
   height:100%
