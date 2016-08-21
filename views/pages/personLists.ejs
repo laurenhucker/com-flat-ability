@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% include ../partials/head.ejs %>
+    <link rel="stylesheet" type="text/css" href="stylesheets/test_style.css">
+    </link>
+
+    <script src="Chart.js"></script>
+<script>
+    var myChart = new Chart({...})
+</script>
+
+</head>
+
+<header>
+    <% include ../partials/header.ejs %>
+
+</header>
+
+<body>
+    <div class="outer-container">
+        <%for(var i = 0; i < candidates.length; i++){%>
+            <div class="candidate-wrapper">
+                <div class="candidate-photo">
+                    <img src="cat.jpg" class="candidate-photo-image">
+                </div>
+                <div class="candidate-info">
+                    <div class="candidate-name">
+                        <%=candidates[i].name%>
+                    </div>
+                    <div class="candidate-match">
+                        <%=candidate_match_percent%>%
+                    </div>
+                </div>
+            </div>
+        <%}%>
+        <div class = "charts">
+
+        </div>
+
+    </div>
+</body>
+</html>
