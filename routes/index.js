@@ -17,8 +17,8 @@ var credentials = {
 var spotifyApi = new SpotifyWebApi(credentials);
 
 router.get('/', function (req, res) {
-  res.render('pages/index',{link:'/auth'})
-  //res.send('Hello<br><a href="/auth">Log in with Spotify</a>');
+  //res.render('pages/index',{link:'/auth'})
+  res.send('Hello<br><a href="/auth">Log in with Spotify</a>');
 });
 
 
@@ -36,13 +36,14 @@ router.get('/callback', function (req, res) {
     post(key, res);
 });
 
-router.get('/test', function (req, res) {
+router.get('/personList', function (req, res) {
     var users = db.getUsers();
     res.render("pages/personList", {candidates: users,candidate_name: "Cat", candidate_match_percent: 69});
 });
 
 router.get('/profile', function (req, res) {
     var u = db.getUsers()[0];
+
 
     var info = {
         userName: u.name,
@@ -55,15 +56,43 @@ router.get('/profile', function (req, res) {
         songs: u.spotify
     };
 
-    
+
     res.render("pages/profile", info);
+
+    getGeniusPlaylistJSON('1281597756','1ok2P5ointA9iZqPGQGSLQ','1281597756','0WecQF718OOPVmSsDizFou').then(function(result){
+        console.log(result);
+        var info = {
+            userName: u.name,
+            userAge: u.age,
+            userOccupation: u.occupation,
+            address: u.suburb,
+            rent: u.priceRange,
+            occupationDetails: u.studying,
+            extraDetails: u.desc,
+            songs: result
+        };
+        res.render("pages/profile", info);
+    });
+
 });
 
 
 router.get('/success', function (req, res) {
     console.log('hello');
+    /*getCommonIDs('1281597756','1ok2P5ointA9iZqPGQGSLQ','1281597756','0WecQF718OOPVmSsDizFou').then(function(result){
+        console.log(result);
+    })*/
+
+    /*getGeniusPlaylistJSON('1281597756','1ok2P5ointA9iZqPGQGSLQ','1281597756','0WecQF718OOPVmSsDizFou').then(function(result){
+        console.log(result);
+    });*/
+
     res.send("Success baby");
-    getAudioFeaturesFromPlaylist('1281597756','1ok2P5ointA9iZqPGQGSLQ').then(function(result){
+
+    getUsefulAudioFeaturesFromPlaylist('1281597756','1ok2P5ointA9iZqPGQGSLQ').then(function(result){
+        console.log(result);
+    })
+    getAverageAudioFeaturesFromPlaylist('1281597756','1ok2P5ointA9iZqPGQGSLQ').then(function(result){
         console.log(result);
     })
     /*getIdsFromPlaylist('1281597756','0WecQF718OOPVmSsDizFou').then(function(result){
@@ -96,6 +125,148 @@ router.get('/success', function (req, res) {
         });
     });*/
 });
+//returns array of useful audio features
+function getUsefulAudioFeaturesFromPlaylist(userID, playlistID){
+    return new Promise(function(fulfill,reject){
+        getAudioFeaturesFromPlaylist(userID, playlistID).then(function(result){
+            console.log(result);
+            console.log('hello');
+            var newFeatures = [];
+            var audioFeatures= result.audio_features;
+            for(var i = 0; i < audioFeatures.length; i++){
+                console.log('daswiDFBNUOABFUJ');
+                var danceability = audioFeatures[i].danceability;
+                var energy = audioFeatures[i].energy;
+                var loudness = audioFeatures[i].loudness;
+                var speechiness = audioFeatures[i].speechiness;
+                var acousticness = audioFeatures[i].acousticness;
+                var instrumentalness = audioFeatures[i].instrumentalness;
+                var liveness = audioFeatures[i].liveness;
+                var tempo = audioFeatures[i].tempo;
+                newFeatures.push({danceability:danceability,
+                    energy:energy,
+                    loudness:loudness,
+                    speechiness:speechiness,
+                    instrumentalness:instrumentalness,
+                    liveness:liveness,
+                    tempo:tempo,
+                    acousticness:acousticness
+                });
+            }
+            console.log(newFeatures);
+            fulfill(newFeatures);
+        }).catch(function(error){
+            console.log(error);
+        });
+    });
+}
+
+function getGeniusPlaylistJSON(userID1, playlistID1, userID2, playlistID2){
+    return new Promise(function(fulfill,reject){
+        getCommonIDs(userID1, playlistID1, userID2, playlistID2).then(function(result){
+            var commonIds = result;
+            getTracks(commonIds).then(function(result2){
+                getRelevantTrackInformation(result2).then(function(result3){
+                    fulfill(result3);
+                })
+            });
+        });
+    });
+}
+
+function getRelevantTrackInformation(tracks){
+    console.log('yowzasadsasd');
+    return new Promise(function(fulfill,reject){
+        console.log('yowzasadsasd');
+        var tracksJSON = [];
+        for(var i = 0; i < tracks.length; i++){
+            console.log('yowdzfafsdza');
+            var name = tracks[i].name;
+            var popularity = tracks[i].popularity;
+            var ID = tracks[i].id;
+            var artists = tracks[i].artists[0].name;
+            var album = tracks[i].album.name;
+            tracksJSON.push({name:name, popularity:popularity, ID:ID, artists:artists,album:album});
+        }
+        fulfill(tracksJSON);
+    });
+}
+
+//get JSON of tracks from array of IDs
+function getTracks(IDs){
+    return new Promise(function(fulfill,reject){
+        spotifyApi.getTracks(IDs)
+            .then(function(data) {
+                fulfill(data.body.tracks);
+            }, function(err) {
+                reject(err);
+            });
+    });
+}
+
+//array of IDs
+function getCommonIDs(userID1, playlistID1, userID2, playlistID2){
+    return new Promise(function(fulfill, reject){
+        getIdsFromPlaylist(userID1,playlistID1).then(function(result){
+            var firstIDs = result;
+            getIdsFromPlaylist(userID2,playlistID2).then(function(result2){
+                var secondIDs = result2;
+                getGeniusFromIDs(firstIDs, secondIDs).then(function(result3){
+                    fulfill(result3);
+                });
+            });
+        });
+    })
+}
+//JSON of audio feaures
+
+function getAverageAudioFeaturesFromPlaylist(userID1, playlistID1){
+    console.log("IN HERE  aWJDHBAJWD");
+    return new Promise(function(fulfill, reject){
+        getAudioFeaturesFromPlaylist(userID1, playlistID1).then(function(result){
+            var features1 = result;
+
+            var danceability1 = 0;
+            var energy1 = 0;
+            var loudness1 = 0;
+            var speechiness1 = 0;
+            var acousticness1 = 0;
+            var instrumentalness1 = 0;
+            var liveness1 = 0;
+            var tempo1 = 0;
+
+            for(var i = 0; i < features1.audio_features.length; i++){
+                danceability1 += features1.audio_features[i].danceability;
+                energy1 += features1.audio_features[i].energy;
+                loudness1 += features1.audio_features[i].loudness;
+                speechiness1 += features1.audio_features[i].speechiness;
+                acousticness1 += features1.audio_features[i].acousticness;
+                instrumentalness1 += features1.audio_features[i].instrumentalness;
+                liveness1 += features1.audio_features[i].liveness;
+                tempo1 += features1.audio_features[i].tempo;
+            }
+            var playlist_length = features1.audio_features.length;
+            var average_features = {
+                danceability: danceability1/playlist_length,
+                energy: energy1/playlist_length,
+                loudness: loudness1/playlist_length,
+                speechiness: speechiness1/playlist_length,
+                acousticness: acousticness1/playlist_length,
+                instrumentalness: instrumentalness1/playlist_length,
+                liveness: liveness1/playlist_length,
+                tempo: tempo1/playlist_length
+            };
+            /*console.log("AVERAGE FEATURES FOR PLAYLIST 1:");
+            console.log(average_features);*/
+            fulfill(average_features);
+        }).catch(function(error){
+            console.log(error);
+        })
+
+
+    });
+
+}
 
 function getAudioFeaturesFromPlaylist(userID, playlistID){
     return new Promise(function(fulfill, reject){
@@ -107,7 +278,7 @@ function getAudioFeaturesFromPlaylist(userID, playlistID){
     });
 
 }
-
+//array of IDS
 function getGeniusFromIDs(first_IDs, second_IDs){
     return new Promise(function (fulfill, reject){
         var commonIDs = [];
@@ -122,7 +293,7 @@ function getGeniusFromIDs(first_IDs, second_IDs){
         fulfill(commonIDs);
     });
 }
-
+//JSON of audio features
 function getAudioFeaturesForTrack(track_id){
     return new Promise(function (fulfill, reject){
         spotifyApi.getAudioFeaturesForTrack(track_id)
@@ -133,7 +304,7 @@ function getAudioFeaturesForTrack(track_id){
             });
     });
 }
-
+//JSON of multiple audio features
 function getAudioFeaturesForTracks(track_ids){
     return new Promise(function (fulfill, reject){
         spotifyApi.getAudioFeaturesForTracks(track_ids)
@@ -144,7 +315,7 @@ function getAudioFeaturesForTracks(track_ids){
             });
     });
 }
-
+//JSON of a single track
 function getTrack(track_id){
     return new Promise(function (fulfill, reject){
         spotifyApi.getTrack(track_id)
@@ -155,7 +326,7 @@ function getTrack(track_id){
             });
     });
 }
-
+//JSON of playlist
 function getPlaylist(user_id, playlist_id){
     return new Promise(function(fulfill, reject){
         spotifyApi.getPlaylist(user_id, playlist_id)
@@ -166,7 +337,7 @@ function getPlaylist(user_id, playlist_id){
             });
     });
 }
-
+//array of IDS from playlist
 function getIdsFromPlaylist(user_id, playlist_id){
     return new Promise(function(fulfill, reject){
         spotifyApi.getPlaylist(user_id, playlist_id)
