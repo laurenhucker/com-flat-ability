@@ -41,18 +41,21 @@ router.get('/test', function (req, res) {
 
 router.get('/profile', function (req, res) {
     var u = db.getUsers()[0];
-    
-    var info = {
-        userName: u.name,
-        userAge: u.age,
-        userOccupation: u.occupation,
-        address: u.suburb,
-        rent: u.priceRange,
-        occupationDetails: u.studying,
-        extraDetails: u.desc,
-        songs: u.spotify
-    };
-    res.render("pages/profile", info);
+
+    getGeniusPlaylistJSON('1281597756','1ok2P5ointA9iZqPGQGSLQ','1281597756','0WecQF718OOPVmSsDizFou').then(function(result){
+        console.log(result);
+        var info = {
+            userName: u.name,
+            userAge: u.age,
+            userOccupation: u.occupation,
+            address: u.suburb,
+            rent: u.priceRange,
+            occupationDetails: u.studying,
+            extraDetails: u.desc,
+            songs: result
+        };
+        res.render("pages/profile", info);
+    });
 });
 
 
