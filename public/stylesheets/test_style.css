@@ -1,24 +1,22 @@
 body {
   padding-top: 20px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-  background-color: #181818;
+  background-color: white;
   color: black;
 }
 
 .outer-container {
-  background-color: aqua;
 }
 
 .candidate-wrapper {
   margin:10px 10px;
-  background-color: blueviolet;
   width:30%;
   display: inline-block;
   vertical-align: top;
 }
 
 .candidate-wrapper.candidate-photo {
-
+  width: 100px;
 }
 
 .candidate-photo-image {
@@ -28,10 +26,8 @@ body {
 }
 
 .candidate-info {
-  background-color: black;
   display: inline-block;
   vertical-align: top;
-  color: darkgreen;
   text-align: center;
   font-size: 25px;
   width:100%;
@@ -41,13 +37,20 @@ body {
 }
 
 .candidate-name {
-  background-color: darkred;
   width:48%;
   horiz-align: left;
 }
 
 .candidate-match {
-  background-color: darkgoldenrod;
   width:48%;
   horiz-align: right;
+}
+
+a{
+  color: black;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
 }
