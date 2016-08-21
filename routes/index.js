@@ -40,9 +40,13 @@ router.get('/test', function (req, res) {
 
 router.get('/success', function (req, res) {
     console.log('hello');
-    getCommonIDs('1281597756','1ok2P5ointA9iZqPGQGSLQ','1281597756','0WecQF718OOPVmSsDizFou').then(function(result){
+    /*getCommonIDs('1281597756','1ok2P5ointA9iZqPGQGSLQ','1281597756','0WecQF718OOPVmSsDizFou').then(function(result){
         console.log(result);
-    })
+    })*/
+
+    getGeniusPlaylistJSON('1281597756','1ok2P5ointA9iZqPGQGSLQ','1281597756','0WecQF718OOPVmSsDizFou').then(function(result){
+        console.log(result);
+    });
     res.send("Success baby");
 
     /*getAudioFeaturesFromPlaylist('1281597756','1ok2P5ointA9iZqPGQGSLQ').then(function(result){
@@ -78,6 +82,50 @@ router.get('/success', function (req, res) {
         });
     });*/
 });
+
+function getGeniusPlaylistJSON(userID1, playlistID1, userID2, playlistID2){
+    return new Promise(function(fulfill,reject){
+        getCommonIDs(userID1, playlistID1, userID2, playlistID2).then(function(result){
+            var commonIds = result;
+            getTracks(commonIds).then(function(result2){
+                getRelevantTrackInformation(result2).then(function(result3){
+                    fulfill(result3);
+                })
+            });
+        });
+    });
+}
+
+function getRelevantTrackInformation(tracks){
+    console.log('yowzasadsasd');
+    return new Promise(function(fulfill,reject){
+        console.log('yowzasadsasd');
+        var tracksJSON = [];
+        for(var i = 0; i < tracks.length; i++){
+            console.log('yowdzfafsdza');
+            var name = tracks[i].name;
+            var popularity = tracks[i].popularity;
+            var ID = tracks[i].id;
+            var artists = tracks[i].artists[0].name;
+            var album = tracks[i].album.name;
+            tracksJSON.push({name:name, popularity:popularity, ID:ID, artists:artists,album:album});
+        }
+        fulfill(tracksJSON);
+    });
+}
+
+//get JSON of tracks from array of IDs
+function getTracks(IDs){
+    return new Promise(function(fulfill,reject){
+        spotifyApi.getTracks(IDs)
+            .then(function(data) {
+                fulfill(data.body.tracks);
+            }, function(err) {
+                reject(err);
+            });
+    });
+}
+
 //array of IDs
 function getCommonIDs(userID1, playlistID1, userID2, playlistID2){
     return new Promise(function(fulfill, reject){
