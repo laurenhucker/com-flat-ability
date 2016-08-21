@@ -36,7 +36,7 @@ router.get('/callback', function (req, res) {
 
 router.get('/personList', function (req, res) {
     var users = db.getUsers();
-    res.render("pages/personList", {candidates: users,candidate_name: "Cat", candidate_match_percent: 69});
+    res.render("pages/personList", {candidates: users, candidate_name: "Cat", candidate_match_percent: 84});
 });
 
 router.get('/profile', function (req, res) {
