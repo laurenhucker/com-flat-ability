@@ -2,6 +2,9 @@ var express = require('express');
 var router = express.Router();
 
 var request = require('request');
+
+var db = require('./../db.js');
+
 //var Base64 = require('base64-js');
 
 var SpotifyWebApi = require('spotify-web-api-node');
@@ -15,10 +18,6 @@ var spotifyApi = new SpotifyWebApi(credentials);
 router.get('/', function (req, res) {
   res.render('pages/index',{link:'/auth'})
   //res.send('Hello<br><a href="/auth">Log in with Spotify</a>');
-});
-
-router.get('/flat', function (req, res) {
-    res.render('./views/flat.ejs', {photos: ["PHOTO 1","PHOTO 2", "PHOTO 3" ]});
 });
 
 router.get('/auth', function (req, res) {
@@ -37,6 +36,23 @@ router.get('/callback', function (req, res) {
 router.get('/test', function (req, res) {
     res.render("pages/test", {candidates: ['hi', 'poo'],candidate_name: "Cat", candidate_match_percent: 69});
 });
+
+router.get('/profile', function (req, res) {
+    var u = db.getUsers()[0];
+    
+    var info = {
+        userName: u.name,
+        userAge: u.age,
+        userOccupation: u.occupation,
+        address: u.suburb,
+        rent: u.priceRange,
+        occupationDetails: u.studying,
+        extraDetails: u.desc,
+        songs: u.spotify
+    };
+    res.render("pages/profile", info);
+});
+
 
 router.get('/success', function (req, res) {
     res.send("Success baby");
