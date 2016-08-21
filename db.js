@@ -13,7 +13,7 @@ var users = [
         desc: "Vegan, Dog owner",
         suburb: "Aro valley",
         priceRange: "150-200",
-        spotify: songs={name: "s", artist: "d", album: "d"}
+        spotify: songs=[{title: "s", artist: "d", album: "f"}, {title: "k", artist: "9", album: "6"}]
     },
     {
         name: "Bob",
