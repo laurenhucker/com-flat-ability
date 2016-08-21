@@ -21,6 +21,8 @@ router.get('/', function (req, res) {
   //res.send('Hello<br><a href="/auth">Log in with Spotify</a>');
 });
 
+
+
 router.get('/auth', function (req, res) {
   var client_id = credentials.client_id;
   var response_type = 'code';
@@ -36,12 +38,12 @@ router.get('/callback', function (req, res) {
 
 router.get('/test', function (req, res) {
     var users = db.getUsers();
-    res.render("pages/test", {candidates: users,candidate_name: "Cat", candidate_match_percent: 69});
+    res.render("pages/personList", {candidates: users,candidate_name: "Cat", candidate_match_percent: 69});
 });
 
 router.get('/profile', function (req, res) {
     var u = db.getUsers()[0];
-    
+
     var info = {
         userName: u.name,
         userAge: u.age,
@@ -52,6 +54,8 @@ router.get('/profile', function (req, res) {
         extraDetails: u.desc,
         songs: u.spotify
     };
+
+    
     res.render("pages/profile", info);
 });
 

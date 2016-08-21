@@ -3,6 +3,9 @@
 <head>
     <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
     </link>
+
+    <script src="/node_modules/chartjs/src/chart.js"></script>
+
 </head>
 
 <body>
@@ -40,9 +43,15 @@
         </table>
     </div>
     <div class="spotify-info">
-        SOME GRAPHS
+      <script>
+        var barGraph = new Chart({...})
+      </script>
 
     </div>
+
+    <canvas id="myChart" width="400" height="400"></canvas>
+
+
 </div>
 </body>
 </html>
