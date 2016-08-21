@@ -40,11 +40,11 @@ router.get('/personList', function (req, res) {
 });
 
 router.get('/profile', function (req, res) {
-    var u = db.getUsers()[0];
-
+    var u = db.getUsers()[req.query.id];
     getGeniusPlaylistJSON('1281597756','1ok2P5ointA9iZqPGQGSLQ','1281597756','0WecQF718OOPVmSsDizFou').then(function(result){
         console.log(result);
         var info = {
+            userID: req.query.id,
             userName: u.name,
             userAge: u.age,
             userOccupation: u.occupation,
@@ -71,12 +71,12 @@ router.get('/success', function (req, res) {
 
     res.send("Success baby");
 
-    getUsefulAudioFeaturesFromPlaylist('1281597756','1ok2P5ointA9iZqPGQGSLQ').then(function(result){
+    /*getUsefulAudioFeaturesFromPlaylist('1281597756','1ok2P5ointA9iZqPGQGSLQ').then(function(result){
         console.log(result);
     })
     getAverageAudioFeaturesFromPlaylist('1281597756','1ok2P5ointA9iZqPGQGSLQ').then(function(result){
         console.log(result);
-    })
+    })*/
     /*getIdsFromPlaylist('1281597756','0WecQF718OOPVmSsDizFou').then(function(result){
         var firstIDs = result;
         console.log(firstIDs);
@@ -358,7 +358,7 @@ function post(key, res) {
             var token = JSON.parse(body).access_token;
             //console.log(token);
             spotifyApi.setAccessToken(token);
-            res.redirect("http://localhost:3000/success");
+            res.redirect("http://localhost:3000/personList");
         } else {
           //console.log(body);
           console.log(response.statusCode);
