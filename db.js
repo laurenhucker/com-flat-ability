@@ -29,6 +29,17 @@ var users = [
         spotify: {}
     },
     {
+        name: "Alex",
+        age: 18,
+        occupation: "Student",
+        studying: "Psychology",
+        photo: "/images/alex.jpg",
+        desc: "Allergic to cats",
+        suburb: "Mt Vic",
+        priceRange: "150-200",
+        spotify: {}
+    },
+    {
         name: "Paul",
         age: 20,
         occupation: "Young Professional",
@@ -57,17 +68,6 @@ var users = [
         studying: "Checkout chick",
         photo: "/images/lauren.jpg",
         desc: "Has a child",
-        suburb: "Mt Vic",
-        priceRange: "150-200",
-        spotify: {}
-    },
-    {
-        name: "Alex",
-        age: 18,
-        occupation: "Student",
-        studying: "Psychology",
-        photo: "/images/alex.jpg",
-        desc: "Allergic to cats",
         suburb: "Mt Vic",
         priceRange: "150-200",
         spotify: {}
