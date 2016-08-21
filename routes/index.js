@@ -43,7 +43,10 @@ router.get('/test', function (req, res) {
 router.get('/success', function (req, res) {
     console.log('hello');
     res.send("Success baby");
-    getAudioFeaturesFromPlaylist('1281597756','1ok2P5ointA9iZqPGQGSLQ').then(function(result){
+    /*getAudioFeaturesFromPlaylist('1281597756','1ok2P5ointA9iZqPGQGSLQ').then(function(result){
+        console.log(result);
+    })*/
+    getAverageAudioFeaturesFromPlaylist('1281597756','1ok2P5ointA9iZqPGQGSLQ').then(function(result){
         console.log(result);
     })
     /*getIdsFromPlaylist('1281597756','0WecQF718OOPVmSsDizFou').then(function(result){
@@ -76,6 +79,54 @@ router.get('/success', function (req, res) {
         });
     });*/
 });
+
+function getAverageAudioFeaturesFromPlaylist(userID1, playlistID1){
+    console.log("IN HERE  aWJDHBAJWD");
+    return new Promise(function(fulfill, reject){
+        getAudioFeaturesFromPlaylist(userID1, playlistID1).then(function(result){
+            var features1 = result;
+
+            var danceability1 = 0;
+            var energy1 = 0;
+            var loudness1 = 0;
+            var speechiness1 = 0;
+            var acousticness1 = 0;
+            var instrumentalness1 = 0;
+            var liveness1 = 0;
+            var tempo1 = 0;
+
+            for(var i = 0; i < features1.audio_features.length; i++){
+                danceability1 += features1.audio_features[i].danceability;
+                energy1 += features1.audio_features[i].energy;
+                loudness1 += features1.audio_features[i].loudness;
+                speechiness1 += features1.audio_features[i].speechiness;
+                acousticness1 += features1.audio_features[i].acousticness;
+                instrumentalness1 += features1.audio_features[i].instrumentalness;
+                liveness1 += features1.audio_features[i].liveness;
+                tempo1 += features1.audio_features[i].tempo;
+            }
+            var playlist_length = features1.audio_features.length;
+            var average_features = {
+                danceability: danceability1/playlist_length,
+                energy: energy1/playlist_length,
+                loudness: loudness1/playlist_length,
+                speechiness: speechiness1/playlist_length,
+                acousticness: acousticness1/playlist_length,
+                instrumentalness: instrumentalness1/playlist_length,
+                liveness: liveness1/playlist_length,
+                tempo: tempo1/playlist_length
+            };
+            /*console.log("AVERAGE FEATURES FOR PLAYLIST 1:");
+            console.log(average_features);*/
+            fulfill(average_features);
+        }).catch(function(error){
+            console.log(error);
+        })
+
+
+    });
+
+}
 
 function getAudioFeaturesFromPlaylist(userID, playlistID){
     return new Promise(function(fulfill, reject){
