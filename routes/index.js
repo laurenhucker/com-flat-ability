@@ -21,6 +21,8 @@ router.get('/', function (req, res) {
   //res.send('Hello<br><a href="/auth">Log in with Spotify</a>');
 });
 
+
+
 router.get('/auth', function (req, res) {
   var client_id = credentials.client_id;
   var response_type = 'code';
@@ -42,8 +44,14 @@ router.get('/personList', function (req, res) {
 router.get('/profile', function (req, res) {
     var mySpotifyDeets = {id: "1281597756", playlistId: "5JI2DTDPcV2f1Ez3a9GIPx"};
     var u = db.getUsers()[req.query.id];
-    getGeniusPlaylistJSON("1281597756", "0WecQF718OOPVmSsDizFou", u.spotifyAccount.id, u.spotifyAccount.playlistId).then(function(result){
-        console.log(result);
+
+
+    getGeniusPlaylistJSON('1281597756','1ok2P5ointA9iZqPGQGSLQ','1281597756','0WecQF718OOPVmSsDizFou').then(function(result1){
+      console.log('got genius');
+      getAverageAudioFeaturesFromPlaylist('1281597756','1ok2P5ointA9iZqPGQGSLQ').then(function(result2){
+        console.log('got first average');
+      getAverageAudioFeaturesFromPlaylist('1281597756','0WecQF718OOPVmSsDizFou').then(function(result3){
+        console.log('got second average');
         var info = {
             userName: u.name,
             userAge: u.age,
@@ -52,11 +60,18 @@ router.get('/profile', function (req, res) {
             rent: u.priceRange,
             occupationDetails: u.studying,
             extraDetails: u.desc,
-            songs: result,
+
             displayPhoto: u.photo
+            songs: result1,
+            playlist1_AVGDATA: result2,
+            playlist2_AVGDATA: result3
         };
-        res.render("pages/profile", info);
+            console.log('helloooooooooooooooooooooooooo');
+            res.render("pages/profile", info);
+        });
+      });
     });
+
 });
 
 

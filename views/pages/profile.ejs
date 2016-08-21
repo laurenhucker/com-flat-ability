@@ -4,6 +4,10 @@
     <link rel="stylesheet" type="text/css" href="stylesheets/style.css"></link>
     
         <% include ../partials/head.ejs %>
+
+
+    <script src="/chart.js/dist/Chart.js"></script>
+
 </head>
 
 <body>
@@ -46,9 +50,100 @@
         </table>
     </div>
     <div class="spotify-info">
-        SOME GRAPHS
+
+
+      <canvas class = "chart1" id="myChart" width="400" height="400"></canvas>
+
+      <script>
+        var ctx = document.getElementById("myChart");
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ["Danceability", "Energy", "Speechiness", "Acousticness", "Instrumentalness", "Liveness"],
+                datasets: [{
+                    label: "PlayList 1",
+                    data: [  <%=playlist1_AVGDATA.danceability%>,  <%=playlist1_AVGDATA.energy%>,  <%=playlist1_AVGDATA.speechiness%>,  <%=playlist1_AVGDATA.acousticness%>,  <%=playlist1_AVGDATA.instrumentalness%>,  <%=playlist1_AVGDATA.liveness%>],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255,99,132,1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+              responsive: false,
+
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero:true
+                        }
+                    }]
+                }
+            }
+        });
+
+        </script>
+
+        <canvas class="chart2" id="chart2" width="400" height="400"></canvas>
+
+        <script>
+          var ctx = document.getElementById("chart2");
+          var myChart = new Chart(ctx, {
+              type: 'bar',
+              data: {
+                  labels: ["Danceability", "Energy", "Speechiness", "Acousticness", "Instrumentalness", "Liveness"],
+                  datasets: [{
+                      label: "PlayList 2",
+                      data: [  <%=playlist2_AVGDATA.danceability%>,  <%=playlist2_AVGDATA.energy%>,  <%=playlist2_AVGDATA.speechiness%>,  <%=playlist2_AVGDATA.acousticness%>,  <%=playlist2_AVGDATA.instrumentalness%>,  <%=playlist2_AVGDATA.liveness%>],
+                      backgroundColor: [
+                          'rgba(255, 99, 132, 0.2)',
+                          'rgba(54, 162, 235, 0.2)',
+                          'rgba(255, 206, 86, 0.2)',
+                          'rgba(75, 192, 192, 0.2)',
+                          'rgba(153, 102, 255, 0.2)',
+                          'rgba(255, 159, 64, 0.2)'
+                      ],
+                      borderColor: [
+                          'rgba(255,99,132,1)',
+                          'rgba(54, 162, 235, 1)',
+                          'rgba(255, 206, 86, 1)',
+                          'rgba(75, 192, 192, 1)',
+                          'rgba(153, 102, 255, 1)',
+                          'rgba(255, 159, 64, 1)'
+                      ],
+                      borderWidth: 1
+                  }]
+              },
+              options: {
+                responsive: false,
+
+                  scales: {
+                      yAxes: [{
+                          ticks: {
+                              beginAtZero:true
+                          }
+                      }]
+                  }
+              }
+          });
+
+          </script>
 
     </div>
+
 </div>
 </body>
 </html>
