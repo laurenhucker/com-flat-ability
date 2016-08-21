@@ -1,28 +1,31 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <% include ../partials/head.ejs %>
-
+    <link rel="stylesheet" type="text/css" href="stylesheets/homepage_style.css"> </link>
+    <p> </p>
+    <p> </p>
+    <p> </p>
   </head>
 
   <body>
-
     <header>
-      <% include ../partials/header.ejs %>
+
     </header>
 
-    <main>
-      <div>
-        <p>
-          'Hello<br><a href="/auth">Log in with Spotify</a>'
-
-
-        </p>
+    <div class="whole-container">
+      <img src="homepage_flat-abilitylogotop.png" class="top-logo"></img>
+      <div class="inner-container">
+        <img src="homepage_music_icon.png" class="display-block"></img>
+        <img src="homepage_flat-abilitytitle.png" class="display-block"></img>
+        <img src="homepage_find_your_flat_match.png" class="display-block"></img>
+        <a href="/auth">
+          <img src="homepage_tryout.png" class="display-block"></img>
+        </a>
       </div>
-    </main>
+    </div>
 
     <footer>
-      <% include ../partials/footer.ejs %>
+
     </footer>
 
   </body>
