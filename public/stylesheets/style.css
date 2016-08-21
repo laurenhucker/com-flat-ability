@@ -68,12 +68,14 @@ a {
 
 .user-desc {
   height:300px;
-  background-color: gainsboro;
-  width: 30%;
+  background-color: #f4f4f4;
+  width: 48%;
   float:left;
+  font-size: 18px;
+  padding-left: 10px;
 }
 .user-photo {
-  width: 70%;
+  width: 50%;
   height:300px;
   float: left;
 }
@@ -84,12 +86,21 @@ a {
   vertical-align: top;
 }
 
+
 .flat-info {
   position: absolute;
-  margin-top: 230px;
+  padding-left: 20px;
+  font-size: 30px;
+  margin-top: 180px;
   padding: 10px;
   color: black;
   z-index: 2;
+}
+
+.contact{
+  position: absolute;
+  z-index: 2;
+  margin-top: 70px;
 }
 
 img {
@@ -118,6 +129,6 @@ td {
 
 .genius-playlist {
   font-size: 24px;
-  padding-top: 10px;
+  padding-top: 30px;
   padding-left: 10px;
 }
