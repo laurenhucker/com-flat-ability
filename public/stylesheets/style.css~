@@ -17,25 +17,27 @@ body {
   vertical-align: top;
 }
 
+<<<<<<< HEAD
+=======
+  padding-top: 20px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-color: #f2f2f2;
+  color: white;
+}
 
+.outer-container {
+  background-color: aqua;
+}
 
+.candidate-wrapper {
+  margin:10px 10px;
+  background-color: blueviolet;
+  width:30%;
+  display: inline-block;
+  vertical-align: top;
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+>>>>>>> 50abfd962807f325664759628c6310630ab77d28
 .candidate-wrapper.candidate-photo {
 
 }

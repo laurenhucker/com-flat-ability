@@ -5,8 +5,9 @@
 
 <link rel="stylesheet" type="text/css" href="stylesheet.css" />
 
-
+<<<<<<< HEAD
 <script src="node_modules/Chart.js/src/chart.js"></script>
+=======
 <link rel="stylesheet" type="text/css" href="bootstrap.min.css" />
 <link rel="stylesheet" type="text/css" href="bootstrap.css" />
 
@@ -15,3 +16,4 @@
 <script src="./Starter Template for Bootstrap_files/ie10-viewport-bug-workaround.js"></script>
   
 
+>>>>>>> 50abfd962807f325664759628c6310630ab77d28
