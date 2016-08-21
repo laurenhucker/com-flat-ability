@@ -20,9 +20,10 @@
 <body>
     <div class="outer-container">
         <%for(var i = 0; i < candidates.length; i++){%>
+        <% %>
             <div class="candidate-wrapper">
                 <div class="candidate-photo">
-                    <img src="cat.jpg" class="candidate-photo-image">
+                    <img src="<%= candidates[i].photo %>" class="candidate-photo-image">
                 </div>
                 <div class="candidate-info">
                     <div class="candidate-name">
