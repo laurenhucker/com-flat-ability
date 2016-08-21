@@ -5,11 +5,11 @@ var file = "./data/db.json";
 
 var users = [
     {
-        name: "Lena",
+        name: "Nina",
         age: 20,
         occupation: "Student",
         studying: "Commerce",
-        photo: "a file",
+        photo: "images/nina.jpg",
         desc: "Vegan, Dog owner",
         suburb: "Aro valley",
         priceRange: "150-200",
@@ -18,14 +18,59 @@ var users = [
     {
         name: "Bob",
         age: 19,
+        occupation: "Student",
+        studying: "Computer Science",
+        photo: "a file",
+        desc: "Has a cat",
+        suburb: "Te Aro",
+        priceRange: "150-200",
+        spotify: {}
+    },
+    {
+        name: "Harry",
+        age: 20,
+        occupation: "Young Professional",
+        studying: "Barista",
+        photo: "a file",
+        desc: "Vegan",
+        suburb: "Mt Vic",
+        priceRange: "150-200",
+        spotify: {}
+    },
+    {
+        name: "Mandy",
+        age: 18,
         occupation: "student",
-        studying: "Bio Med",
+        studying: "Psychology",
         photo: "a file",
         desc: "Allergic to cats",
         suburb: "Mt Vic",
         priceRange: "150-200",
         spotify: {}
-    }];
+    },
+    {
+        name: "Katherine",
+        age: 23,
+        occupation: "Young Professional",
+        studying: "Checkout chick",
+        photo: "a file",
+        desc: "Has a child",
+        suburb: "Mt Vic",
+        priceRange: "150-200",
+        spotify: {}
+    },
+    {
+        name: "Mandy",
+        age: 18,
+        occupation: "student",
+        studying: "Psychology",
+        photo: "a file",
+        desc: "Allergic to cats",
+        suburb: "Mt Vic",
+        priceRange: "150-200",
+        spotify: {}
+    }
+];
 
 var flats = [{
     address: "1 two lane",

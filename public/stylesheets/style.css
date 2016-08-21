@@ -1,8 +1,7 @@
 body {
-
   padding-top: 20px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-  background-color: #181818;
+  background-color: white;
   color: black;
 }
 
@@ -76,9 +75,13 @@ a {
 .user-photo {
   width: 70%;
   height:300px;
-  float:left;
-  background-color: white;
-  color: green;
+  float: left;
+}
+
+.user-image {
+  display: block;
+  margin: 0 auto;
+  vertical-align: top;
 }
 
 .flat-info {
@@ -87,4 +90,34 @@ a {
   padding: 10px;
   color: black;
   z-index: 2;
+}
+
+img {
+  height:300px;
+}
+
+table {
+  width: 100%;
+  background-color: #FFFFFF;
+  font-size: 18px;
+  padding-bottom: 20px;
+}
+
+tr {
+
+}
+
+td {
+  padding: 5px;
+  border-bottom: 1px solid black;
+}
+
+.table-labels {
+  font-weight: bold;
+}
+
+.genius-playlist {
+  font-size: 24px;
+  padding-top: 10px;
+  padding-left: 10px;
 }

@@ -13,7 +13,7 @@
         <div class="login">LOGIN</div>
     </div>
     <div class="flat-title">
-        <div class="user-photo"><img src="/images/nina.jpg" class="user-image"> </div>
+        <div class="user-photo"> PHOTO HERE <img src="/images/nina.jpg"> </div>
         <div class="user-desc">
             <div class="preferred-suburb"> <%= address %></div>
             <div class="prefered-rent-range"> <%= rent %> p/week</div>
@@ -28,13 +28,8 @@
         </div>
     </div>
     <div class="genius-playlist">
-        <p class="genius-playlist"> Genius Playlist</p>
+        GENIUS PLAYLIST
         <table>
-            <tr class="table-labels">
-                <td>Title</td>
-                <td>Artist</td>
-                <td>Album</td>
-            </tr>
             <% for(var i = 0; i < songs.length; i++){ %>
             <tr>
                 <td><%= songs[i].name %></td>
