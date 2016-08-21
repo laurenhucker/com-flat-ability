@@ -13,6 +13,7 @@ var users = [
         desc: "Vegan, Dog owner",
         suburb: "Aro valley",
         priceRange: "150-200",
+        spotifyAccount: {id: "1281597756", playlistId: "1ok2P5ointA9iZqPGQGSLQ"},
         spotify: songs=[{title: "s", artist: "d", album: "f"}, {title: "k", artist: "9", album: "6"}]
     },
     {
@@ -24,6 +25,7 @@ var users = [
         desc: "Has a cat",
         suburb: "Te Aro",
         priceRange: "150-200",
+        spotifyAccount: {id: "1246385134", playlistId: "4Br383P0RJHkziU0rdLQGt"},
         spotify: {}
     },
     {

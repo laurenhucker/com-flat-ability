@@ -40,11 +40,11 @@ router.get('/personList', function (req, res) {
 });
 
 router.get('/profile', function (req, res) {
+    var mySpotifyDeets = {id: "1281597756", playlistId: "5JI2DTDPcV2f1Ez3a9GIPx"};
     var u = db.getUsers()[req.query.id];
-    getGeniusPlaylistJSON('1281597756','1ok2P5ointA9iZqPGQGSLQ','1281597756','0WecQF718OOPVmSsDizFou').then(function(result){
+    getGeniusPlaylistJSON("1281597756", "0WecQF718OOPVmSsDizFou", u.spotifyAccount.id, u.spotifyAccount.playlistId).then(function(result){
         console.log(result);
         var info = {
-            userID: req.query.id,
             userName: u.name,
             userAge: u.age,
             userOccupation: u.occupation,
